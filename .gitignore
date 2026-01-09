@@ -1,0 +1,3 @@
+# Ignore frontend dependencies
+student-performance-frontend/node_modules
+student-performance-frontend/.next
