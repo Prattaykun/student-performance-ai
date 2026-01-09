@@ -1,0 +1,163 @@
+{
+  "count": 2392,
+  "averages": {
+    "GPA": 1.9061863027265407,
+    "StudyTimeWeekly": 9.771991919431747,
+    "Absences": 14.54138795986622,
+    "Age": 16.468645484949832,
+    "ParentalSupport": 2.1220735785953178,
+    "ParentalEducation": 1.74623745819398
+  },
+  "distributions": {
+    "gradeClass": [
+      {
+        "name": "Class 0",
+        "value": 107
+      },
+      {
+        "name": "Class 1",
+        "value": 269
+      },
+      {
+        "name": "Class 2",
+        "value": 391
+      },
+      {
+        "name": "Class 3",
+        "value": 414
+      },
+      {
+        "name": "Class 4",
+        "value": 1211
+      }
+    ]
+  },
+  "trends": {
+    "studyTime": [
+      {
+        "studyTime": "0-2",
+        "avgGPA": 1.6456528230040637
+      },
+      {
+        "studyTime": "2-4",
+        "avgGPA": 1.7387831426608669
+      },
+      {
+        "studyTime": "4-6",
+        "avgGPA": 1.7405415744860868
+      },
+      {
+        "studyTime": "6-8",
+        "avgGPA": 1.8105776183346929
+      },
+      {
+        "studyTime": "8-10",
+        "avgGPA": 1.9129448575386565
+      },
+      {
+        "studyTime": "10-12",
+        "avgGPA": 1.9312053669442475
+      },
+      {
+        "studyTime": "12-14",
+        "avgGPA": 2.002660516877184
+      },
+      {
+        "studyTime": "14-16",
+        "avgGPA": 2.0824755157718413
+      },
+      {
+        "studyTime": "16-18",
+        "avgGPA": 2.076112996463596
+      },
+      {
+        "studyTime": "18-20",
+        "avgGPA": 2.1810552754806207
+      }
+    ],
+    "absences": [
+      {
+        "absences": "0-2",
+        "avgGPA": 3.3194669618343324
+      },
+      {
+        "absences": "2-4",
+        "avgGPA": 3.0877376462374326
+      },
+      {
+        "absences": "4-6",
+        "avgGPA": 2.878506162450074
+      },
+      {
+        "absences": "6-8",
+        "avgGPA": 2.689171297728459
+      },
+      {
+        "absences": "8-10",
+        "avgGPA": 2.5201630773028443
+      },
+      {
+        "absences": "10-12",
+        "avgGPA": 2.305210560819366
+      },
+      {
+        "absences": "12-14",
+        "avgGPA": 2.089300026747954
+      },
+      {
+        "absences": "14-16",
+        "avgGPA": 1.9866444775061247
+      },
+      {
+        "absences": "16-18",
+        "avgGPA": 1.7212658755281356
+      },
+      {
+        "absences": "18-20",
+        "avgGPA": 1.4785329775558005
+      },
+      {
+        "absences": "20-22",
+        "avgGPA": 1.332176607923057
+      },
+      {
+        "absences": "22-24",
+        "avgGPA": 1.0694261404813663
+      },
+      {
+        "absences": "24-26",
+        "avgGPA": 0.8973739463813446
+      },
+      {
+        "absences": "26-28",
+        "avgGPA": 0.6895565077083076
+      },
+      {
+        "absences": "28-30",
+        "avgGPA": 0.5774233210294937
+      }
+    ],
+    "parentalEducation": [
+      {
+        "educationLevel": "0",
+        "avgGPA": 1.8930452520399665
+      },
+      {
+        "educationLevel": "1",
+        "avgGPA": 1.9440220550009146
+      },
+      {
+        "educationLevel": "2",
+        "avgGPA": 1.929881110891299
+      },
+      {
+        "educationLevel": "3",
+        "avgGPA": 1.8090823841983414
+      },
+      {
+        "educationLevel": "4",
+        "avgGPA": 1.8158115938519879
+      }
+    ]
+  }
+}
