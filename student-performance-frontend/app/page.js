@@ -23,9 +23,16 @@ export default function Home() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    // Validate age range 14-19 before making request
+    const ageNum = Number(age);
+    if (!Number.isFinite(ageNum) || ageNum < 14 || ageNum > 19) {
+      setError("Age must be between 14 and 19 because the model is trained on this range dataset.");
+      setLoading(false);
+      return;
+    }
     try {
       const res = await axios.get(`${backendUrl}/predict`, {
-        params: { age, gender }
+        params: { age: ageNum, gender }
       });
       if (res.data.status === "success") {
           setResult(res.data.prediction);
@@ -44,7 +51,7 @@ export default function Home() {
     <main>
       <header style={{ textAlign: "center", marginBottom: "3rem" }}>
         <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "var(--primary)" }}>
-          🎓 Student Performance AI
+           Student Performance Prediction
         </h1>
         <p style={{ color: "var(--text-muted)" }}>
           Predict academic success and analyze performance trends.

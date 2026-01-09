@@ -40,24 +40,24 @@ export default function StudyTrendChart({ trendData, studentGPA, studentStudyTim
   // we can just display the chart.
 
   return (
-    <div className="card" style={{ height: '400px', display: 'flex', flexDirection: 'column' }}>
+    <div className="card" style={{ height: '400px', display: 'flex', flexDirection: 'column', padding: '20px' }}>
       <h3 style={{ textAlign: 'center', marginBottom: '1rem' }}>GPA Trend by Study Time</h3>
       <div style={{ flex: 1 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             data={chartData}
             margin={{
-              top: 20,
-              right: 20,
-              bottom: 20,
-              left: 20,
+              top: 60,
+              right: 40,
+              bottom: 60,
+              left: 40,
             }}
           >
             <CartesianGrid stroke="#f5f5f5" />
-            <XAxis dataKey="name" label={{ value: 'Weekly Study Time (Hours)', position: 'insideBottom', offset: -10 }} />
-            <YAxis label={{ value: 'GPA', angle: -90, position: 'insideLeft' }} />
+            <XAxis dataKey="name" tickMargin={8} label={{ value: 'Weekly Study Time (Hours)', position: 'bottom', offset: 20 }} />
+            <YAxis tickMargin={8} label={{ value: 'GPA', angle: -90, position: 'insideLeft', offset: 10 }} />
             <Tooltip />
-            <Legend />
+            <Legend verticalAlign="top" align="center" wrapperStyle={{ paddingBottom: 8 }} />
             <Bar dataKey="Average GPA" barSize={20} fill="#4f46e5" />
             <Line type="monotone" dataKey="Average GPA" stroke="#ff7300" />
             {studentStudyTime && studentGPA && (
