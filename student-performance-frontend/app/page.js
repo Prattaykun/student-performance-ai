@@ -1,101 +1,79 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import PerformanceChart from "../components/PerformanceChart";
+import Dashboard from "../components/Dashboard";
 
 export default function Home() {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("1");
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
   const backendUrl = "http://127.0.0.1:8000"||"https://student-performance-ai-98aw.onrender.com";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.get(`${backendUrl}/predict`, {
-      params: { age, gender }
-    });
-    setResult(res.data.prediction);
+    setLoading(true);
+    try {
+      const res = await axios.get(`${backendUrl}/predict`, {
+        params: { age, gender }
+      });
+      setResult(res.data.prediction);
+    } catch (error) {
+      console.error("Error fetching prediction:", error);
+      alert("Failed to fetch prediction. Please ensure the backend is running.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div style={{ minHeight: "100vh", padding: "20px", background: "#f5f7fb" }}>
-      <h1 style={{ textAlign: "center" }}>🎓 Student Performance AI</h1>
+    <div className="container">
+      <div className="header">
+        <h1>🎓 Student Performance AI</h1>
+        <p>Advanced analytics and performance prediction dashboard</p>
+      </div>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          maxWidth: "400px",
-          margin: "20px auto",
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
-        }}
-      >
-        <label>Age</label>
-        <input
-          type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          required
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-        />
+      <div className="form-card">
+        <form onSubmit={handleSubmit}>
+          <div className="dashboard-grid" style={{ gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+            <div className="form-group">
+              <label>Age</label>
+              <input
+                className="form-control"
+                type="number"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                required
+                min="15"
+                max="100"
+                placeholder="Enter age (15-18)"
+              />
+            </div>
 
-        <label>Gender</label>
-        <select
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-        >
-          <option value="1">Male</option>
-          <option value="0">Female</option>
-        </select>
-
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#4f46e5",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
-          }}
-        >
-          Predict Performance
-        </button>
-      </form>
-
-      {result && (
-        <div style={{ maxWidth: "700px", margin: "40px auto" }}>
-          <h2 style={{ textAlign: "center" }}>Prediction Results</h2>
-          <PerformanceChart data={result} />
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "15px",
-              marginTop: "20px"
-            }}
-          >
-            {Object.entries(result).map(([key, value]) => (
-              <div
-                key={key}
-                style={{
-                  background: "#fff",
-                  padding: "15px",
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-                }}
+            <div className="form-group">
+              <label>Gender</label>
+              <select
+                className="form-control"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
               >
-                <strong>{key}</strong>
-                <p>{value}</p>
-              </div>
-            ))}
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+              </select>
+            </div>
           </div>
-        </div>
-      )}
+
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={loading}
+          >
+            {loading ? "Analyzing..." : "Predict Performance"}
+          </button>
+        </form>
+      </div>
+
+      <Dashboard predictionResult={result} />
     </div>
   );
 }
