@@ -1,101 +1,95 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-import PerformanceChart from "../components/PerformanceChart";
+import stats from "../data/stats.json";
+
+import InputForm from "../components/InputForm";
+import PredictionCards from "../components/PredictionCards";
+import RadarProfile from "../components/charts/RadarProfile";
+import StudyTrendChart from "../components/charts/StudyTrendChart";
+import GradeDistChart from "../components/charts/GradeDistChart";
+import FactorImpact from "../components/charts/FactorImpact";
 
 export default function Home() {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("1");
   const [result, setResult] = useState(null);
-  const backendUrl = "http://127.0.0.1:8000"||"https://student-performance-ai-98aw.onrender.com";
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const backendUrl = "http://127.0.0.1:8000";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.get(`${backendUrl}/predict`, {
-      params: { age, gender }
-    });
-    setResult(res.data.prediction);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.get(`${backendUrl}/predict`, {
+        params: { age, gender }
+      });
+      if (res.data.status === "success") {
+          setResult(res.data.prediction);
+      } else {
+          setError("Prediction failed. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Error connecting to backend.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div style={{ minHeight: "100vh", padding: "20px", background: "#f5f7fb" }}>
-      <h1 style={{ textAlign: "center" }}>🎓 Student Performance AI</h1>
+    <main>
+      <header style={{ textAlign: "center", marginBottom: "3rem" }}>
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "var(--primary)" }}>
+          🎓 Student Performance AI
+        </h1>
+        <p style={{ color: "var(--text-muted)" }}>
+          Predict academic success and analyze performance trends.
+        </p>
+      </header>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          maxWidth: "400px",
-          margin: "20px auto",
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
-        }}
-      >
-        <label>Age</label>
-        <input
-          type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          required
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+      <section style={{ marginBottom: "3rem" }}>
+        <InputForm
+          age={age}
+          setAge={setAge}
+          gender={gender}
+          setGender={setGender}
+          onSubmit={handleSubmit}
+          loading={loading}
         />
-
-        <label>Gender</label>
-        <select
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-        >
-          <option value="1">Male</option>
-          <option value="0">Female</option>
-        </select>
-
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            background: "#4f46e5",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
-          }}
-        >
-          Predict Performance
-        </button>
-      </form>
+        {error && <p style={{ color: "red", textAlign: "center", marginTop: "10px" }}>{error}</p>}
+      </section>
 
       {result && (
-        <div style={{ maxWidth: "700px", margin: "40px auto" }}>
-          <h2 style={{ textAlign: "center" }}>Prediction Results</h2>
-          <PerformanceChart data={result} />
+        <div className="animate-fade-in">
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "15px",
-              marginTop: "20px"
-            }}
-          >
-            {Object.entries(result).map(([key, value]) => (
-              <div
-                key={key}
-                style={{
-                  background: "#fff",
-                  padding: "15px",
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-                }}
-              >
-                <strong>{key}</strong>
-                <p>{value}</p>
-              </div>
-            ))}
-          </div>
+          <section style={{ marginBottom: "3rem" }}>
+            <h2 style={{ marginBottom: "1.5rem", textAlign: "center" }}>Prediction Overview</h2>
+            <PredictionCards data={result} />
+          </section>
+
+          <section>
+             <h2 style={{ marginBottom: "1.5rem", textAlign: "center" }}>Analysis & Trends</h2>
+             <div style={{
+               display: "grid",
+               gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+               gap: "2rem"
+             }}>
+                <RadarProfile prediction={result} averages={stats.averages} />
+                <StudyTrendChart
+                   trendData={stats.trends.studyTime}
+                   studentGPA={result.GPA}
+                   studentStudyTime={result.StudyTimeWeekly}
+                />
+                <GradeDistChart distData={stats.distributions.gradeClass} predictedClass={result.GradeClass} />
+                <FactorImpact eduTrend={stats.trends.parentalEducation} />
+             </div>
+          </section>
         </div>
       )}
-    </div>
+    </main>
   );
 }
