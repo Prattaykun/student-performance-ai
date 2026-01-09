@@ -17,7 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const backendUrl = "http://127.0.0.1:8000";
+  const backendUrl = "http://127.0.0.1:8000"|| "https://student-performance-ai-98aw.onrender.com";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
