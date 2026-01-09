@@ -1,4 +1,4 @@
-# Student Performance AI
+# Student Performance Prediction – Frontend (Next.js)
 
 A Next.js frontend application that predicts student performance and visualizes analytical trends based on demographic and behavioral data.
 
@@ -85,7 +85,7 @@ graph TD
     - **Factor Impact**: Analyzes the effect of parental education on performance.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 
-# Student Performance AI – Backend (FastAPI + Machine Learning)
+# Student Performance Prediction – Backend (FastAPI + Machine Learning)
 
 ## Overview
 This backend service provides a machine-learning–powered API to predict a comprehensive student performance profile from minimal demographic inputs. It exposes REST endpoints using FastAPI, trains a multi-output ML model from a CSV dataset, and returns both numerical and categorical predictions in real time.
