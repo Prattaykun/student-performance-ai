@@ -62,6 +62,15 @@ graph TD
    ```
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser.
+---
+
+## Environment Variables
+
+Ensure the following environment variable is set in the `.env.local` file for the frontend:
+
+```env
+NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:8000
+```
 
 ### Building for Production
 
@@ -337,5 +346,3 @@ uvicorn app.main:app --host 0.0.0.0 --port $PORT
 * Production-ready FastAPI configuration
 * Easily extensible for retraining, logging, and monitoring
 
-```
-```
