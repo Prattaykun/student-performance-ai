@@ -54,7 +54,7 @@ export default function Home() {
            Student Performance Prediction
         </h1>
         <p style={{ color: "var(--text-muted)" }}>
-          Predict academic success and analyze performance trends.
+         As the model is deployed on free plan of render,wait for it to wake up!(refresh if needed) 
         </p>
       </header>
 
